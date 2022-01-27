@@ -12,24 +12,3 @@ function dd($var) {
 }
 
 require("app/router.php");
-
-
-
-
-if (isset($_GET['action'])) {
-  $action = $_GET['action'];
-} else {
-  die("Neni obsazen parametr action.");
-}
-
-$actionName = strtolower($action) . "Action";
-
-$noteController = new \App\Controllers\NoteController();
-
-if (!method_exists($noteController, $actionName)) {
-  die("Metoda " . $actionName . " není definována.");
-}
-
-$noteController->{$actionName}();
-
-//Debugger::barDump($test);

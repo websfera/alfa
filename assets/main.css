@@ -1,0 +1,26 @@
+.container {
+  width: 800px;
+  border: 1px solid black;
+  padding: 3px;
+  margin: 0 auto;
+}
+
+header {
+  min-height: 150px;
+  border: 1px solid red;
+}
+
+nav {
+  min-height: 40px;
+  border: 1px solid green;
+}
+
+main {
+  min-height: 300px;
+  border: 1px solid blue;
+}
+
+footer {
+  min-height: 100px;
+  border: 1px solid green;
+}
