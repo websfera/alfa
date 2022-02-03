@@ -2,14 +2,14 @@
 
 namespace App\Controllers;
 
-class NoteController {
+class NoteController extends \App\Controller {
 
   public function createAction() {
-    echo "Spustena akce CREATE na controlleru Note.";
+    $this->template->render();
   }
 
   public function readAction() {
-      echo "Spustena akce READ na controlleru Note.";
+      $this->template->render();
   }
 
 }

@@ -26,5 +26,6 @@ if (!method_exists($oController, $actionName)) {
   throw new Exception("Action " . $actionName . " is not defined on controller " . $oController::CLASS);
 }
 
+$oController->startup($action, $controller);
 $oController->{$actionName}();
 

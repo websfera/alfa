@@ -18,13 +18,25 @@ class View {
     extract($this->data);
 
     // nacist hlavicku sablony
-    include "app/views/common/header.php";
+    if (file_exists("app/views/common/header.php")) {
+      include "app/views/common/header.php";
+    } else {
+      throw new \Exception("app/views/common/header.php not exists.");
+    }
 
     // nacist obsah kontroleru a akce
-    include "app/views/" . $this->file;
+    if (file_exists("app/views/" . $this->file)) {
+      include "app/views/" . $this->file;
+    } else {
+      throw new \Exception("app/views/" . $this->file . " not exists.");
+    }
 
     //nacis paticku sablony
-    include "app/views/common/footer.php";
+    if (file_exists("app/views/common/footer.php")) {
+      include "app/views/common/footer.php";
+    } else {
+      throw new \Exception("app/views/common/footer.php not exists.");
+    }
   }
 
   public function __set($name, $value) {

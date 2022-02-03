@@ -2,29 +2,17 @@
 
 namespace App\Controllers;
 
-use \App\View;
-
-class HomeController {
-
-  protected View $template;
-
-  public function __construct() {
-    $this->template = new View();
-  }
+class HomeController extends \App\Controller {
 
   public function defaultAction() {
-    $this->template->setFile("home/default.php");
-    $this->template->nadpis1 = "Hlavní ..... nadpis";
-    $this->template->dnes = new \DateTime();
-
-    dd($this->template);
+    $this->template->nadpis1 = "Hlavní nadpis";
+    $this->template->odstavec1 = "Lorem ipsum amet dollor........";
+    $this->template->date = new \DateTime();
 
     $this->template->render();
   }
 
   public function testAction() {
-    $this->template->setFile("home/test.php");
-
     $this->template->render();
   }
 
