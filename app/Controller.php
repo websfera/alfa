@@ -3,7 +3,7 @@ namespace App;
 
 use \App\View;
 
-class Controller {
+abstract class Controller {
 
   protected View $template;
 
@@ -13,6 +13,14 @@ class Controller {
 
   public function startup($actionName, $controllerName) {
     $this->template->setFile($controllerName . "/". $actionName . ".php");
+    $this->template->controller = $this;
+  }
+
+  /**
+    * @param string $destination Cilova lokace ve formatu controller/akce
+    */
+  public function link(string $destination) {
+    return "https://alfa2021.milacekmartin.repl.co/" . "?route=" . $destination;
   }
 
 }

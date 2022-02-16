@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set('Europe/Prague');
+
 use Tracy\Debugger;
 use App\Controllers\NoteController;
 
