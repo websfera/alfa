@@ -8,7 +8,7 @@ class HomeController extends \App\Controller {
     $this->template->nadpis1 = "Hlavní nadpis";
     $this->template->odstavec1 = "Lorem ipsum amet dollor........";
     $this->template->date = new \DateTime();
-    dd(new \DateTime());
+
     $this->template->render();
   }
 
