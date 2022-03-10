@@ -18,7 +18,11 @@ if(!class_exists($controllerName)) {
   throw new Exception("Controller " . $controllerName . " not exist.");
 }
 
-$oController = new $controllerName();
+require 'config/config.php';
+$container = new App\Container($config);
+
+
+$oController = new $controllerName($container);
 
 $actionName = strtolower($action) . "Action";
 

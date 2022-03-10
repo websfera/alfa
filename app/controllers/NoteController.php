@@ -16,7 +16,7 @@ class NoteController extends \App\Controller {
     $newNote->setTitle("Moje první poznámka");
     $newNote->setText("Lorem ipsum amet dollor.");
 
-    $this->template->note = $newNote;    
+    $this->template->note = $newNote;   
     $this->template->render();
   }
 

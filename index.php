@@ -13,9 +13,4 @@ function dd($var) {
   Debugger::barDump($var);
 }
 
-require 'app/config/config.php';
-$container = new App\Container($config);
-
-dd($container->get("db_host"));
-
 require("app/router.php");
