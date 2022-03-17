@@ -28,5 +28,22 @@ final class mPDO {
     $this->pdo->exec("SET CHARACTER_SET_CONNECTION=utf8");
     $this->pdo->exec("SET SQL_MODE = ''");
   }
+
+  public function query(string $sql, array $params = []): ?array {
+    $this->statement = $this->pdo->prepare($sql);
+    $result = null;
+    
+    if($this->statement && $this->statement->execute($params)) {
+      $data = [];
+
+      while ($row = $this->statement->fetch(PDO::FETCH_ASSOC)) {
+        $data[] = $row;
+      }
+
+      $result = $data; 
+    }
+
+    return $result;
+  }
   
 }
