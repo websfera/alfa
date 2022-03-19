@@ -5,6 +5,7 @@ date_default_timezone_set('Europe/Prague');
 use Tracy\Debugger;
 use App\Controllers\NoteController;
 
+require "app/exceptions.php";
 require "vendor/autoload.php";
 
 Debugger::enable(Debugger::DEVELOPMENT);

@@ -6,17 +6,61 @@ use \Datetime;
 
 class Note {
 
+  protected int $id;
   protected string $title;
   protected string $text;
   protected Datetime $dateCreated;
   protected ?Datetime $dateUpdated;
   protected string $author;
 
-  public function __construct(string $author) {
+  public function __construct() {
     $this->dateCreated = new Datetime();
-    $this->author = $author;
   }
 
+  public function findById(int $id) {
+    $db = new \App\DB\mPDO(
+      'milacek.eu',
+      'alfa',
+      '4lf4',
+      'alfa'
+    );
+
+    $sql = "SELECT * FROM alfa.note WHERE id = ?;";
+    $params = [$id];
+
+    $rows = $db->query($sql, $params);
+
+    if (count($rows) <= 0) {
+      throw new \RecordNotFoundException("Record not found!");
+    }
+
+    $this->setValues($rows[0]);
+  }
+
+  public function setValues(array $values): void {
+    $this->id = (int)$values['id'];
+    $this->title = $values['title'];
+    $this->text = $values['text'];
+
+    $this->dateCreated = DateTime::createFromFormat(
+      'Y-m-d H:i:s',
+      $values['date_created']
+    );
+
+    if (!empty($values['date_updated'])) {
+      $this->dateUpdated = DateTime::createFromFormat(
+      'Y-m-d H:i:s',
+      $values['date_updated']
+    );
+    }
+
+    $this->author = $values['author'];
+  }
+  
+  public function getId(): int {
+    return $this->id;  
+  }
+  
   public function getTitle(): string {
     return $this->title;
   }

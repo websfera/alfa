@@ -5,17 +5,14 @@ namespace App\Controllers;
 class HomeController extends \App\Controller {
 
   public function defaultAction() {
-    
-    $db = new \App\DB\mPDO(
-      'milacek.eu',
-      'alfa',
-      '4lf4',
-      'alfa'
-    );
 
-    $rows = $db->query("SELECT title, text FROM alfa.note;");
+    $db = $this->container->getService('connection');
+    dd($db);
     
-    dd($rows);
+    $note = new \App\Models\Note();
+    $note->findById(1);
+    
+    dd($note);
 
     
     $this->template->nadpis1 = "Hlavní nadpis";
