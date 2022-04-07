@@ -9,11 +9,13 @@ class HomeController extends \App\Controller {
     $db = $this->container->getService('connection');
     dd($db);
     
-    $note = new \App\Models\Note();
+    $note = new \App\Models\Note($this->container);
     $note->findById(1);
-    
     dd($note);
 
+    $user = new \App\Models\User();
+    $user->findById(1);
+    dd($user);
     
     $this->template->nadpis1 = "Hlavní nadpis";
     $this->template->odstavec1 = "Lorem ipsum amet dollor........";

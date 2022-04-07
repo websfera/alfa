@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use \Datetime;
+use App\Container;
 
 class Note {
 
@@ -13,22 +14,22 @@ class Note {
   protected ?Datetime $dateUpdated;
   protected string $author;
 
-  public function __construct() {
+  protected Container $container;
+  protected mPDO $db;
+  
+  public function __construct(Container $container) {
     $this->dateCreated = new Datetime();
+    $this->container = $container;
+    $this->db = $this->container->getService("connection");
   }
 
   public function findById(int $id) {
-    $db = new \App\DB\mPDO(
-      'milacek.eu',
-      'alfa',
-      '4lf4',
-      'alfa'
-    );
+    //$db = $this->container->getService("connection");
 
     $sql = "SELECT * FROM alfa.note WHERE id = ?;";
     $params = [$id];
 
-    $rows = $db->query($sql, $params);
+    $rows = $this->db->query($sql, $params);
 
     if (count($rows) <= 0) {
       throw new \RecordNotFoundException("Record not found!");

@@ -6,6 +6,6 @@ $config = [
   // Konfigurace DB
   "db_host" => "milacek.eu",
   "db_user" => "alfa",
-  "db_pass" => "alfa21",
+  "db_pass" => "4lf4",
   "db_dbname" => "alfa"
 ];
