@@ -4,9 +4,8 @@ namespace App\Models;
 
 use \DateTime;
 
-class User {
+class User extends AbstractEntity  {
 
-  private int $id;
   private string $firstName;
   private string $lastName;
   private string $email;
@@ -16,18 +15,11 @@ class User {
   private DateTime $dateCreated;
   private ?DateTime $dateUpdated;
 
-
+  
   public function findById(int $id) {
-    $db = new \App\DB\mPDO(
-      'milacek.eu',
-      'alfa',
-      '4lf4',
-      'alfa'
-    );
-
     $sql = "SELECT * FROM alfa.user WHERE id = ?;";
 
-    $rows = $db->query($sql, [$id]);
+    $rows = $this->db->query($sql, [$id]);
 
     if (count($rows) <= 0) {
       throw \RecordNotFoundException("Record not found");
@@ -64,10 +56,6 @@ class User {
       $v['date_updated']
     );
     }
-  }
-
-  public function getId(): int {
-    return $this->id;
   }
   
   public function getFirstName(): string {

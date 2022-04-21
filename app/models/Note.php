@@ -5,27 +5,20 @@ namespace App\Models;
 use \Datetime;
 use App\Container;
 
-class Note {
+class Note extends AbstractEntity {
 
-  protected int $id;
   protected string $title;
   protected string $text;
   protected Datetime $dateCreated;
-  protected ?Datetime $dateUpdated;
+  protected ?Datetime $dateUpdated = null;
   protected string $author;
 
-  protected Container $container;
-  protected mPDO $db;
-  
   public function __construct(Container $container) {
+    parent::__construct($container);
     $this->dateCreated = new Datetime();
-    $this->container = $container;
-    $this->db = $this->container->getService("connection");
   }
-
+  
   public function findById(int $id) {
-    //$db = $this->container->getService("connection");
-
     $sql = "SELECT * FROM alfa.note WHERE id = ?;";
     $params = [$id];
 
@@ -58,8 +51,23 @@ class Note {
     $this->author = $values['author'];
   }
   
-  public function getId(): int {
-    return $this->id;  
+  public function save(): void {
+    $insert = "INSERT INTO alfa.note 
+(`title`, `text`, `date_created`, `date_updated`, `author`) VALUES (?, ?, ?, ?, ?);";
+
+    $dateUpdated = null;
+    if ($this->dateUpdated !== null) {
+      $dateUpdated = $this->dateUpdated->format("Y-m-d H:i:s");
+    }
+    
+    $params = [
+      $this->title,
+      $this->text,
+      $this->dateCreated->format("Y-m-d H:i:s"),
+      $dateUpdated,
+      $this->author,
+      ];
+    $this->db->query($insert, $params);
   }
   
   public function getTitle(): string {
@@ -92,6 +100,10 @@ class Note {
 
   public function getAuthor(): string {
     return $this->author;
+  }
+
+  public function setAuthor(string $author): void {
+    $this->author = $author;
   }
   
 }

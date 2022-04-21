@@ -13,7 +13,7 @@ class HomeController extends \App\Controller {
     $note->findById(1);
     dd($note);
 
-    $user = new \App\Models\User();
+    $user = new \App\Models\User($this->container);
     $user->findById(1);
     dd($user);
     
