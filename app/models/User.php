@@ -66,6 +66,10 @@ class User extends AbstractEntity  {
     return $this->lastName;
   }
 
+  public function getFullName(): string {
+    return $this->getFirstName() . " " . $this->getLastName();
+  }
+
   public function getEmail(): string {
     return $this->email;
   }
@@ -126,6 +130,10 @@ class User extends AbstractEntity  {
 
   public function setDateUpdated(?DateTime $dateUpdated): void {
     $this->dateUpdated = $dateUpdated;
+  }
+
+  public function __toString() {
+    return $this->getFullName();
   }
   
 }

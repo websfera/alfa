@@ -11,7 +11,9 @@ class Note extends AbstractEntity {
   protected string $text;
   protected Datetime $dateCreated;
   protected ?Datetime $dateUpdated = null;
-  protected string $author;
+  protected ?User $author = null;
+
+  protected int $userId;
 
   public function __construct(Container $container) {
     parent::__construct($container);
@@ -48,12 +50,12 @@ class Note extends AbstractEntity {
     );
     }
 
-    $this->author = $values['author'];
+    $this->userId = $values['user_id'];
   }
   
   public function save(): void {
     $insert = "INSERT INTO alfa.note 
-(`title`, `text`, `date_created`, `date_updated`, `author`) VALUES (?, ?, ?, ?, ?);";
+(`title`, `text`, `date_created`, `date_updated`, `user_id`) VALUES (?, ?, ?, ?, ?);";
 
     $dateUpdated = null;
     if ($this->dateUpdated !== null) {
@@ -65,7 +67,7 @@ class Note extends AbstractEntity {
       $this->text,
       $this->dateCreated->format("Y-m-d H:i:s"),
       $dateUpdated,
-      $this->author,
+      $this->getAuthor()->getId(),
       ];
     $this->db->query($insert, $params);
   }
@@ -98,11 +100,16 @@ class Note extends AbstractEntity {
     return $this->dateUpdated;
   }
 
-  public function getAuthor(): string {
+  public function getAuthor(): User {
+    if ($this->author === null) {
+      $this->author = new User($this->container);
+      $this->author->findById($this->userId);
+    }
+
     return $this->author;
   }
 
-  public function setAuthor(string $author): void {
+  public function setAuthor(User $author): void {
     $this->author = $author;
   }
   

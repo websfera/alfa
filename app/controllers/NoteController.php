@@ -19,9 +19,16 @@ class NoteController extends \App\Controller {
   }
 
   public function readAction() {
+    $id = $_GET['id'];
+    
     $newNote = new Note($this->container);
+    $newNote->findById($id);
 
     $this->template->note = $newNote;   
+    $this->template->render();
+  }
+
+  public function listAction() {
     $this->template->render();
   }
 

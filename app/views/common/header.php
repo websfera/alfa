@@ -43,7 +43,7 @@
 		<div class="nav-scroller py-1 mb-2">
 			<nav class="nav d-flex">
 				<a class="p-2 link-secondary" href="<?= $controller->link("home/default") ?>">Home</a>
-				<a class="p-2 link-secondary" href="<?= $controller->link("note/read") ?>">Note - read</a>
+				<a class="p-2 link-secondary" href="<?= $controller->link("note/list") ?>">Poznámky</a>
 				<a class="p-2 link-secondary" href="<?= $controller->link("note/create") ?>">Note - create</a>
 			</nav>
 		</div>
