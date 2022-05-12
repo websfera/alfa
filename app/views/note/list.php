@@ -1,25 +1,9 @@
 <ul>
+  <?php for($i = 0; $i < count($notes); $i++) : ?>
   <li>
-    <a href="<?= $controller->link('note/read') ?>&id=1">
-      Poznámka 1
+    <a href="<?= $controller->link('note/read') ?>&id=<?= $notes[$i]->getId() ?>">
+      <?= $notes[$i]->getTitle() ?>
     </a>
   </li>
-
-  <li>
-    <a href="<?= $controller->link('note/read') ?>&id=2">
-      Poznámka 2
-    </a>
-  </li>
-
-  <li>
-    <a href="<?= $controller->link('note/read') ?>&id=3">
-      Poznámka 3
-    </a>
-  </li>
-
-  <li>
-    <a href="<?= $controller->link('note/read') ?>&id=4">
-      Poznámka 4
-    </a>
-  </li>
+  <?php endfor; ?>
 </ul>

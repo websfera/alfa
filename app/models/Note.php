@@ -32,7 +32,7 @@ class Note extends AbstractEntity {
 
     $this->setValues($rows[0]);
   }
-
+  
   public function setValues(array $values): void {
     $this->id = (int)$values['id'];
     $this->title = $values['title'];

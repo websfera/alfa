@@ -1,6 +1,8 @@
 <?php
 
-final class Repository implements \Iterator, \Countable {
+namespace App\Models\Repository;
+
+final class Repository implements \Iterator, \Countable, \ArrayAccess {
 
   private array $list;
 
@@ -52,6 +54,22 @@ final class Repository implements \Iterator, \Countable {
 
   public function count(): int {
     return count($this->list);
+  }
+
+  public function offsetExists($offset): bool {
+    return isset($this->list[$offset]);
+  }
+
+  public function offsetGet($offset) {
+    return $this->list[$offset];
+  }
+
+  public function offsetSet($offset, $value): void {
+    $this->list[$offset] = $value;
+  }
+
+  public function offsetUnset($offset): void {
+    unset($this->list[$offset]);
   }
   
 }

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use \DateTime;
+use App\Passwords;
+use App\Container;
 
 class User extends AbstractEntity  {
 
@@ -15,6 +17,13 @@ class User extends AbstractEntity  {
   private DateTime $dateCreated;
   private ?DateTime $dateUpdated;
 
+  private Passwords $passwords;
+
+  public function __construct(Container $container) {
+    Parent::__construct($container);
+
+    $this->passwords = new Passwords();
+  }
   
   public function findById(int $id) {
     $sql = "SELECT * FROM alfa.user WHERE id = ?;";
@@ -22,7 +31,7 @@ class User extends AbstractEntity  {
     $rows = $this->db->query($sql, [$id]);
 
     if (count($rows) <= 0) {
-      throw \RecordNotFoundException("Record not found");
+      throw new \RecordNotFoundException("Record not found");
     }
 
     $this->setValues($rows[0]);
@@ -56,6 +65,30 @@ class User extends AbstractEntity  {
       $v['date_updated']
     );
     }
+  }
+
+  public function save(): void {
+    $insert = "INSERT INTO alfa.user 
+(
+  first_name, 
+  last_name, 
+  email, 
+  password,
+  birth_date,
+  registration_date,
+  date_created, 
+  date_updated
+) VALUES (?, ?, ?, ?, ?, NOW(), NOW(), NULL);";
+
+    $params = [
+      $this->getFirstName(),
+      $this->getLastName(),
+      $this->getEmail(),
+      $this->getPassword(),
+      $this->getBirthDate()->format('Y-m-d H:i:s'),
+    ];
+
+    $this->db->query($insert, $params);
   }
   
   public function getFirstName(): string {
@@ -107,11 +140,11 @@ class User extends AbstractEntity  {
   }
 
   public function setEmail($email): void {
-    $this->email = $lastEmail;
+    $this->email = $email;
   }
 
-  public function setPassword($password): void {
-    $this->password = hash('sha512', $password);
+  public function setPassword(string $password): void {
+    $this->password = $this->passwords->hash($password);
   }
 
   public function setRegistrationDate(

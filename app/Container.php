@@ -2,6 +2,10 @@
 
 namespace App;
 
+use \App\Models\Note;
+use \App\Models\User;
+use \App\Models\Repository\NoteRepository;
+
 class Container {
 
   private array $parameters = [];
@@ -30,6 +34,18 @@ class Container {
       $this->get('db_pass'),
       $this->get('db_dbname')
     );
+  }
+
+  public function createNote(): Note {
+    return new Note($this);
+  }
+
+  public function createUser(): User {
+    return new User($this);
+  }
+
+  public function createNoteRepository(): NoteRepository {
+    return new NoteRepository($this);
   }
   
   public function get(string $key): ?string {
