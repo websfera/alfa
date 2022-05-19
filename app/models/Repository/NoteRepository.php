@@ -24,7 +24,7 @@ final class NoteRepository {
     $repository = new Repository();
     
     foreach($dbResult as $row) {
-      $note = new $this->container->createNote();
+      $note = $this->container->createNote();
       $note->setValues($row);
 
       $repository->push($note);

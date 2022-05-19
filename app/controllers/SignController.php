@@ -20,19 +20,24 @@ class SignController extends \App\Controller {
     try {
       $user->findByEmail($data["email"]);
     } catch (\RecordNotFoundException $e) {
-      die("Spatny email");
+      die("Spatne prihlasovaci udaje!!!");
     }
     
-
     if (!$user->verifyPassword($data["password"])) {
-      die("Spatne heslo");
+      die("Spatne prihlasovaci udaje!!!");
     }
 
-    dd($data);
+    $_SESSION['isLogged'] = true;
+    $_SESSION['userId'] = $user->getId();
+    $_SESSION['userEmail'] = $user->getEmail();
+
+    $this->redirect();
   }
   
   public function outAction() {
-    
+    session_destroy();
+
+    $this->redirect("sign/in");
   }
 
   public function upAction() {

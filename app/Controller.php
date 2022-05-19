@@ -25,7 +25,11 @@ abstract class Controller {
     * @param string $destination Cilova lokace ve formatu controller/akce
     */
   public function link(string $destination) {
-    return "https://alfa2021.milacekmartin.repl.co/" . "?route=" . $destination;
+    return $this->container->get("baseUrl") . "?route=" . $destination;
+  }
+
+  public function redirect(string $destination = "home/default") {
+    header("Location: " . $this->link($destination));
   }
 
 }

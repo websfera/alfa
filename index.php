@@ -14,4 +14,10 @@ function dd($var) {
   Debugger::barDump($var);
 }
 
+session_start();
+
+if (!isset($_SESSION['isLogged'])) {
+  $_SESSION['isLogged'] = false;
+}
+
 require("app/router.php");

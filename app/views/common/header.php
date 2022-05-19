@@ -35,9 +35,16 @@
 							<path d="M21 21l-5.2-5.2" />
 						</svg>
 					</a>
-					<a class="btn btn-sm btn-outline-secondary" 
-            href="<?= $controller->link('sign/in') ?>"
-            >Přihlásit</a>
+
+          <?php if ($_SESSION['isLogged'] !== true) : ?>
+					  <a class="btn btn-sm btn-outline-secondary" 
+              href="<?= $controller->link('sign/in') ?>"
+              >Přihlásit</a>
+          <?php else : ?>
+            <a class="btn btn-sm btn-outline-danger" 
+              href="<?= $controller->link('sign/out') ?>"
+              >Odhlásit</a>
+          <?php endif; ?>
 				</div>
 			</div>
 		</header>
