@@ -37,6 +37,18 @@ class User extends AbstractEntity  {
     $this->setValues($rows[0]);
   }
 
+  public function findByEmail(string $email) {
+    $sql = "SELECT * FROM alfa.user WHERE email = ?;";
+
+    $rows = $this->db->query($sql, [$email]);
+
+    if (count($rows) <= 0) {
+      throw new \RecordNotFoundException("Record not found");
+    }
+
+    $this->setValues($rows[0]);
+  }
+  
   public function setValues(array $v): void {
     $this->id = (int)$v['id'];
     $this->firstName = $v['first_name'];
@@ -89,6 +101,10 @@ class User extends AbstractEntity  {
     ];
 
     $this->db->query($insert, $params);
+  }
+
+  public function verifyPassword(string $password): bool {
+    return $this->passwords->verify($password, $this->getPassword());
   }
   
   public function getFirstName(): string {
